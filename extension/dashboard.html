@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>New Tab</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <script src="js/ractive.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+
+<div id="target"></div>
+
+<script id="login-template" type="text/ractive">
+    <form>
+        <h1 id="login" class="age-label">your key please!?</h1>
+        <footer>
+            <input name="key" id="key" value="{{ key }}">
+            <button type="submit" on-click='login'>Enter</button>
+        </footer>
+    </form>
+</script>
+
+<script id="calendar-template" type="text/ractive">
+    <main>
+        <table class="calendar">
+            <caption class="calendar__banner--month">
+                <h1>{{date.month}} {{date.day}}</h1>
+            </caption>
+            <thead>
+            <tr>
+                <th class="calendar__day__header"></th>
+                <th class="calendar__day__header">00:00</th>
+                <th class="calendar__day__header">01:00</th>
+                <th class="calendar__day__header">02:00</th>
+                <th class="calendar__day__header">03:00</th>
+                <th class="calendar__day__header">04:00</th>
+                <th class="calendar__day__header">05:00</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each [0, 1, 2, 3]: i}}
+                <tr>
+                    <td class="calendar__day__cell"><img src="{{ 'my-icons-collection/svg/' + i + '.svg' }}" width="150" height="60"></td>
+                    {{#each hours: num}}
+                        {{#if (num >= i * 6 && num < (i + 1) * 6) }}
+                            {{#if this == 0}}
+                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                    <div style="width: 150px;"></div>
+                                </td>
+                            {{/if}}
+                            {{#if this == 1}}
+                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                    <img src="my-icons-collection/svg/001-depressed.svg" width="150" height="60">
+                                </td>
+                            {{/if}}
+                            {{#if this == 2}}
+                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                    <img src="my-icons-collection/svg/002-satisfied.svg" width="150" height="60">
+                                </td>
+                            {{/if}}
+                        {{/if}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </main>
+</script>
+<script src="app/app.js"></script>
+</body>
+</html>
+
