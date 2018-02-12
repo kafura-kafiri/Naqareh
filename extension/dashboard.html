@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/calendar.css">
     <script src="js/ractive.js"></script>
+    <script src="js/ractive-events-hover.umd.js"></script>
     <script src="js/jquery.js"></script>
 </head>
 <body>
@@ -17,12 +18,12 @@
 <div id="target"></div>
 
 <script id="login-template" type="text/ractive">
-    <form>
-        <h1 id="login" class="age-label">your key please!?</h1>
-        <footer>
-            <input name="key" id="key" value="{{ key }}">
-            <button type="submit" on-click='login'>Enter</button>
-        </footer>
+    <form class="login">
+        <div style="color: #eaa">username :</div>
+        <div class="input" name="username" id="username" contenteditable="true" value="{{ username }}">{{ username }}</div>
+        <div style="color: #eaa">password :</div>
+        <div class="input" name="password" id="password" contenteditable="true" value="{{ password }}">{{ password }}</div>
+        <div class="button" type="submit" on-click='login'>Enter</div>
     </form>
 </script>
 
@@ -30,17 +31,17 @@
     <main>
         <table class="calendar">
             <caption class="calendar__banner--month">
-                <h1>{{date.month}} {{date.day}}</h1>
+                <h1>{{format(date.month)}} {{date.day}}</h1>
             </caption>
             <thead>
             <tr>
                 <th class="calendar__day__header"></th>
-                <th class="calendar__day__header">00:00</th>
-                <th class="calendar__day__header">01:00</th>
-                <th class="calendar__day__header">02:00</th>
-                <th class="calendar__day__header">03:00</th>
-                <th class="calendar__day__header">04:00</th>
-                <th class="calendar__day__header">05:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 0) }}:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 1) }}:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 2) }}:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 3) }}:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 4) }}:00</th>
+                <th class="calendar__day__header">{{ format_label(label + 5) }}:00</th>
             </tr>
             </thead>
             <tbody>
@@ -50,17 +51,17 @@
                     {{#each hours: num}}
                         {{#if (num >= i * 6 && num < (i + 1) * 6) }}
                             {{#if this == 0}}
-                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                <td class="calendar__day__cell click" on-click="inc" on-hover="hour" data-index="{{num}}">
                                     <div style="width: 150px;"></div>
                                 </td>
                             {{/if}}
                             {{#if this == 1}}
-                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                <td class="calendar__day__cell click" on-click="inc" on-hover="hour" data-index="{{num}}">
                                     <img src="my-icons-collection/svg/001-depressed.svg" width="150" height="60">
                                 </td>
                             {{/if}}
                             {{#if this == 2}}
-                                <td class="calendar__day__cell click" on-click="inc" data-index="{{num}}">
+                                <td class="calendar__day__cell click" on-click="inc" on-hover="hour" data-index="{{num}}">
                                     <img src="my-icons-collection/svg/002-satisfied.svg" width="150" height="60">
                                 </td>
                             {{/if}}
